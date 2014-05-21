@@ -32,7 +32,7 @@ class CloudyFortunesApi(remote.Service):
   # Since no overrides for the schema are specified in this decorator, the
   # request and response ProtoRPC message definition will have the three string
   # fields attr1, attr2 and created.
-  @Quote.method(user_required=True, path='quote', http_method='POST', name='quote.insert')
+  @Quote.method(user_required=True, path='quotes', http_method='POST', name='quote.insert')
   def QuoteInsert(self, my_quote):
     # Though we don't actively change the model passed in, two things happen:
     # - The entity gets an ID and is persisted
@@ -44,7 +44,7 @@ class CloudyFortunesApi(remote.Service):
     return my_quote
     
   @Quote.method(request_fields=('id',),
-                  path='quote/{id}', http_method='GET', name='quote.get')
+                  path='quotes/{id}', http_method='GET', name='quote.get')
   def QuoteGet(self, my_quote):
     # Since the field "id" is included, when it is set from the ProtoRPC
     # message, the decorator attempts to retrieve the entity by its ID. If the
