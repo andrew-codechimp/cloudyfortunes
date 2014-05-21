@@ -14,6 +14,8 @@ class Quote(EndpointsModel):
   # have three string fields: attr1, attr2 and created
   # in an arbitrary order (the ordering of properties in a dictionary is not
   # guaranteed).
+  
+  _message_fields_schema = ('id', 'content', 'created')
   content = ndb.StringProperty(indexed=False)  
   created = ndb.DateTimeProperty(auto_now_add=True)
 
