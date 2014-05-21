@@ -40,7 +40,7 @@ class CloudyFortunesApi(remote.Service):
     if endpoints.get_current_user().email() == 'cubsta@gmail.com':
       my_quote.put()
     else:
-      raise endpoints.ForbiddenException('Invalid user id.')
+      raise endpoints.UnauthorizedException('Invalid user id.')
     return my_quote
     
   @Quote.method(request_fields=('id',),
