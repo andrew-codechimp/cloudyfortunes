@@ -32,12 +32,15 @@ class CloudyFortunesApi(remote.Service):
   # Since no overrides for the schema are specified in this decorator, the
   # request and response ProtoRPC message definition will have the three string
   # fields attr1, attr2 and created.
-  @Quote.method(path='quote', http_method='POST', name='quote.insert')
+  @Quote.method(user_required=True, path='quote', http_method='POST', name='quote.insert')
   def QuoteInsert(self, my_quote):
     # Though we don't actively change the model passed in, two things happen:
     # - The entity gets an ID and is persisted
     # - Since created is auto_now_add, the entity gets a new value for created
-    my_quote.put()
+    if endpoints.get_current_user().email() = 'cubsta@gmail.com':
+      my_quote.put()
+    else:
+      raise endpoints.ForbiddenException('Invalid user id.')
     return my_quote
     
   @Quote.method(request_fields=('id',),
