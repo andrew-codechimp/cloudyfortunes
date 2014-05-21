@@ -30,7 +30,7 @@ class CloudyFortunesApi(remote.Service):
   # Since no overrides for the schema are specified in this decorator, the
   # request and response ProtoRPC message definition will have the three string
   # fields attr1, attr2 and created.
-  @MyModel.method(path='Quote', http_method='POST', name='quote.insert')
+  @Quote.method(path='quote', http_method='POST', name='quote.insert')
   def QuoteInsert(self, my_quote):
     # Though we don't actively change the model passed in, two things happen:
     # - The entity gets an ID and is persisted
@@ -51,7 +51,7 @@ class CloudyFortunesApi(remote.Service):
   # As with MyModel.method, overrides can be specified for both the schema of
   # the request that defines the query and the schema of the messages contained
   # in the "items" list. We'll see how to use these in further examples.
-  @MyModel.query_method(path='Quote', name='quote.list')
+  @Quote.query_method(path='quotes', name='quote.list')
   def QuoteList(self, query):
     # We have no filters that we need to apply, so we just return the query
     # object as is. As we'll see in further examples, we can augment the query
