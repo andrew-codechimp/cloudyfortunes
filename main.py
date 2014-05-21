@@ -2,7 +2,7 @@ import endpoints
 
 from google.appengine.ext import ndb
 from protorpc import remote
-
+from random import sample
 from endpoints_proto_datastore.ndb import EndpointsModel
 
 
