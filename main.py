@@ -37,7 +37,7 @@ class CloudyFortunesApi(remote.Service):
     # Though we don't actively change the model passed in, two things happen:
     # - The entity gets an ID and is persisted
     # - Since created is auto_now_add, the entity gets a new value for created
-    if endpoints.get_current_user().email() = 'cubsta@gmail.com':
+    if endpoints.get_current_user().email() == 'cubsta@gmail.com':
       my_quote.put()
     else:
       raise endpoints.ForbiddenException('Invalid user id.')
