@@ -38,12 +38,6 @@ class CloudyFortunesApi(remote.Service):
     my_quote.put()
     return my_quote
     
-  @Quote.method(path='quotes', http_method='GET', name='quote.random')
-  def QuoteRandom(self, query):
-    keys = Quotes.query().fetch(keys_only=True)
-    key = random.sample(keys, 1)[0]
-    return key.get()
-    
   @Quote.method(request_fields=('id',),
                   path='quote/{id}', http_method='GET', name='quote.get')
   def QuoteGet(self, my_quote):
@@ -78,7 +72,12 @@ class CloudyFortunesApi(remote.Service):
     # object as is. As we'll see in further examples, we can augment the query
     # using environment variables and other parts of the request state.
     return query
-
+    
+  @Quote.method(path='quotes/random', http_method='GET', name='quote.random')
+  def QuoteRandom(self, query):
+    keys = Quotes.query().fetch(keys_only=True)
+    key = random.sample(keys, 1)[0]
+    return key.get()
 
 # Use of endpoints.api_server is the same for APIs created with or without
 # endpoints-proto-datastore.
