@@ -37,6 +37,21 @@ class CloudyFortunesApi(remote.Service):
     # - Since created is auto_now_add, the entity gets a new value for created
     my_quote.put()
     return my_quote
+    
+  @Quote.method(request_fields=('id',),
+                  path='quote/{id}', http_method='GET', name='quote.get')
+  def QuoteGet(self, my_quote):
+    # Since the field "id" is included, when it is set from the ProtoRPC
+    # message, the decorator attempts to retrieve the entity by its ID. If the
+    # entity was retrieved, the boolean from_datastore on the entity will be
+    # True, otherwise it will be False. In this case, if the entity we attempted
+    # to retrieve was not found, we return an HTTP 404 Not Found.
+
+    # For more details on the behavior of setting "id", see the sample
+    # custom_alias_properties/main.py.
+    if not my_quote.from_datastore:
+      raise endpoints.NotFoundException('Quote not found.')
+    return my_quote
 
   # As MyModel.method replaces a ProtoRPC request message to an entity of our
   # model, MyModel.query_method replaces it with a query object for our model.
