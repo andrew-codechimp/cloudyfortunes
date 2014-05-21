@@ -38,6 +38,12 @@ class CloudyFortunesApi(remote.Service):
     my_quote.put()
     return my_quote
     
+  @Quote.method(path='quote', name='quote.random')
+  def QuoteRandom(self, query):    
+    keys = Quotes.query().fetch(keys_only=True)
+    key = random.sample(keys, 1)[0]
+    return key.get()
+    
   @Quote.method(request_fields=('id',),
                   path='quote/{id}', http_method='GET', name='quote.get')
   def QuoteGet(self, my_quote):
