@@ -31,7 +31,7 @@ class CloudyFortunesApi(remote.Service):
       if not my_quote.from_datastore:
         raise endpoints.NotFoundException('Quote not found.')
       else:
-        my_quote.key.delete()
+        ndb.Key(Quote, int(id)).delete()
     else:
       raise endpoints.UnauthorizedException('Invalid user id.')    
     return my_quote  
