@@ -59,7 +59,7 @@ class CloudyFortunesApi(remote.Service):
     # using environment variables and other parts of the request state.
     return query
     
-  @Quote.method(path='quotes/random', http_method='GET', name='quote.random')
+  @Quote.method(path='quotes/random', name='quote.random')
   def QuoteRandom(self, query):
     keys = Quote.query().fetch(keys_only=True)
     key = random.sample(keys, 1)[0]
