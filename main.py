@@ -24,8 +24,7 @@ class CloudyFortunesApi(remote.Service):
       raise endpoints.UnauthorizedException('Invalid user id.')
     return my_quote
   
-  @Quote.method(request_fields=('id'), user_required=True, 
-                  path='quotes/{id}', http_method='DELETE', name='quote.delete')
+  @Quote.method(user_required=True, request_fields=('id'), path='quotes/{id}', http_method='DELETE', name='quote.delete')
   def QuoteDelete(self, my_quote):
     if endpoints.get_current_user().email() == 'cubsta@gmail.com':
       if not my_quote.from_datastore:
@@ -33,11 +32,10 @@ class CloudyFortunesApi(remote.Service):
       else:
         ndb.Key(Quote, int(id)).delete()
     else:
-      raise endpoints.UnauthorizedException('Invalid user id.')    
-    return my_quote  
+      raise endpoints.UnauthorizedException('Invalid user id.')
+    return my_quote
     
-  @Quote.method(request_fields=('id'),
-                  path='quotes/{id}', http_method='GET', name='quote.get')
+  @Quote.method(request_fields=('id'), path='quotes/{id}', http_method='GET', name='quote.get')
   def QuoteGet(self, my_quote):
     # Since the field "id" is included, when it is set from the ProtoRPC
     # message, the decorator attempts to retrieve the entity by its ID. If the
@@ -71,7 +69,7 @@ class CloudyFortunesApi(remote.Service):
     # using environment variables and other parts of the request state.
     return query
     
-  @Quote.method(path='quotes/random', http_method='GET', name='quote.random')
+  @Quote.method(path='quotes/random', request_fields=(''), http_method='GET', name='quote.random')
   def QuoteRandom(self, query):
     keys = Quote.query().fetch(keys_only=True)
     key = random.sample(keys, 1)[0]
