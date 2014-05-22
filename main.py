@@ -23,8 +23,20 @@ class CloudyFortunesApi(remote.Service):
     else:
       raise endpoints.UnauthorizedException('Invalid user id.')
     return my_quote
+  
+  @Quote.method(request_fields=('id'), user_required=True, 
+                  path='quotes/{id}', http_method='DELETE', name='quote.delete')
+  def QuoteGet(self, my_quote):
+    if endpoints.get_current_user().email() == 'cubsta@gmail.com':
+      if not my_quote.from_datastore:
+        raise endpoints.NotFoundException('Quote not found.')
+      else:
+        my_quote.delete()
+    else:
+      raise endpoints.UnauthorizedException('Invalid user id.')    
+    return my_quote  
     
-  @Quote.method(request_fields=('id',),
+  @Quote.method(request_fields=('id'),
                   path='quotes/{id}', http_method='GET', name='quote.get')
   def QuoteGet(self, my_quote):
     # Since the field "id" is included, when it is set from the ProtoRPC
