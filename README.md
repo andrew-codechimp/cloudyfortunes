@@ -5,8 +5,8 @@ Cloud based Fortune Cookies
 
 Just a bit of fun with Python and GAE so no support on this.
 
-http://cloudyfortunes.appspot.com/
+###[API explorer](https://cloudyfortunes.appspot.com/_ah/api/explorer)
 
-https://cloudyfortunes.appspot.com/_ah/api/explorer
+###Get a json object of a random quote
+https://cloudyfortunes.appspot.com/_ah/api/cloudyfortunesapi/v1/quotes/random
 
-https://cloudyfortunes.appspot.com/_ah/api/discovery/v1/apis
