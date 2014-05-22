@@ -26,12 +26,12 @@ class CloudyFortunesApi(remote.Service):
   
   @Quote.method(request_fields=('id'), user_required=True, 
                   path='quotes/{id}', http_method='DELETE', name='quote.delete')
-  def QuoteGet(self, my_quote):
+  def QuoteDelete(self, my_quote):
     if endpoints.get_current_user().email() == 'cubsta@gmail.com':
       if not my_quote.from_datastore:
         raise endpoints.NotFoundException('Quote not found.')
       else:
-        my_quote.delete()
+        my_quote.key.delete()
     else:
       raise endpoints.UnauthorizedException('Invalid user id.')    
     return my_quote  
