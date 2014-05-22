@@ -24,16 +24,16 @@ class CloudyFortunesApi(remote.Service):
       raise endpoints.UnauthorizedException('Invalid user id.')
     return my_quote
   
-  @Quote.method(user_required=True, request_fields=('id'), path='quotes/{id}', http_method='DELETE', name='quote.delete')
-  def QuoteDelete(self, my_quote):
-    if endpoints.get_current_user().email() == 'cubsta@gmail.com':
-      if not my_quote.from_datastore:
-        raise endpoints.NotFoundException('Quote not found.')
-      else:
-        ndb.Key(Quote, int(id)).delete()
-    else:
-      raise endpoints.UnauthorizedException('Invalid user id.')
-    return my_quote
+  # @Quote.method(user_required=True, request_fields=('id'), path='quotes/{id}', http_method='DELETE', name='quote.delete')
+  # def QuoteDelete(self, my_quote):
+  #   if endpoints.get_current_user().email() == 'cubsta@gmail.com':
+  #     if not my_quote.from_datastore:
+  #       raise endpoints.NotFoundException('Quote not found.')
+  #     else:
+  #       ndb.Key(Quote, int(id)).delete()
+  #   else:
+  #     raise endpoints.UnauthorizedException('Invalid user id.')
+  #   return my_quote
     
   @Quote.method(request_fields=('id'), path='quotes/{id}', http_method='GET', name='quote.get')
   def QuoteGet(self, my_quote):
