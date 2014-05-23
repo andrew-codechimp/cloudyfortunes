@@ -10,7 +10,7 @@ class Quote(EndpointsModel):
   content = ndb.StringProperty(indexed=False)  
   created = ndb.DateTimeProperty(auto_now_add=True)
 
-@endpoints.api(name='cloudyfortunesapi', version='v1', description='Cloudy Fortunes API')
+@endpoints.api(name='cloudyfortunes', version='v1', description='Cloudy Fortunes')
 class CloudyFortunesApi(remote.Service):
 
   @Quote.method(user_required=True, path='quotes', http_method='POST', name='quote.insert')
@@ -52,14 +52,14 @@ class CloudyFortunesApi(remote.Service):
   # As with Quote.method, overrides can be specified for both the schema of
   # the request that defines the query and the schema of the messages contained
   # in the "items" list. We'll see how to use these in further examples.
-  @Quote.query_method(path='quotes', name='quote.list')
+  @Quote.query_method(path='quotes', http_method='GET', name='quote.list')
   def QuoteList(self, query):
     # We have no filters that we need to apply, so we just return the query
     # object as is. As we'll see in further examples, we can augment the query
     # using environment variables and other parts of the request state.
     return query
     
-  @Quote.method(path='quotes/random', name='quote.random')
+  @Quote.method(path='quotes/random', http_method='GET', name='quote.random')
   def QuoteRandom(self, query):
     keys = Quote.query().fetch(keys_only=True)
     key = random.sample(keys, 1)[0]
