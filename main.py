@@ -1,11 +1,10 @@
 import endpoints
 import random
+import settings
 
 from google.appengine.ext import ndb
 from protorpc import remote
 from endpoints_proto_datastore.ndb import EndpointsModel
-
-ADMIN_USER_EMAIL = 'cubsta@gmail.com'
 
 class Quote(EndpointsModel):  
   _message_fields_schema = ('id', 'content', 'created')
@@ -20,21 +19,21 @@ class CloudyFortunesApi(remote.Service):
     # Though we don't actively change the model passed in, two things happen:
     # - The entity gets an ID and is persisted
     # - Since created is auto_now_add, the entity gets a new value for created
-    if not endpoints.get_current_user().email() == ADMIN_USER_EMAIL:
+    if not endpoints.get_current_user().email() == settings.ADMIN_USER_EMAIL:
       raise endpoints.UnauthorizedException('Invalid user id.')      
     my_quote.put()
     return my_quote
 
   @Quote.method(user_required=True, path='quotes/{id}', http_method='PUT', name='quote.update')
   def QuoteUpdate(self, my_quote):
-    if not endpoints.get_current_user().email() == ADMIN_USER_EMAIL:
+    if not endpoints.get_current_user().email() == settings.ADMIN_USER_EMAIL:
       raise endpoints.UnauthorizedException('Invalid user id.')      
     my_quote.put()
     return my_quote
 
   @Quote.method(user_required=True, request_fields=('id',), path='quotes/{id}', http_method='DELETE', name='quote.delete')
   def QuoteDelete(self, my_quote):
-    if not endpoints.get_current_user().email() == ADMIN_USER_EMAIL:    
+    if not endpoints.get_current_user().email() == settings.ADMIN_USER_EMAIL:    
       raise endpoints.UnauthorizedException('Invalid user id.')      
     if not my_quote.from_datastore:
       raise endpoints.NotFoundException('Quote not found.')
