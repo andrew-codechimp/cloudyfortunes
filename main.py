@@ -55,19 +55,6 @@ class CloudyFortunesApi(remote.Service):
       raise endpoints.NotFoundException('Quote not found.')
     return my_quote
 
-  # As Quote.method replaces a ProtoRPC request message to an entity of our
-  # model, Quote.query_method replaces it with a query object for our model.
-  # By default, this query will take no arguments (the ProtoRPC request message
-  # is empty) and will return a response with two fields: items and
-  # nextPageToken. "nextPageToken" is simply a string field for paging through
-  # result sets. "items" is what is called a "MessageField", meaning its value
-  # is a ProtoRPC message itself; it is also a repeated field, meaning we have
-  # an array of values rather than a single value. The nested ProtoRPC message
-  # in the definition of "items" uses the same schema in Quote.method, so each
-  # value in the "items" array will have the fields attr1, attr2 and created.
-  # As with Quote.method, overrides can be specified for both the schema of
-  # the request that defines the query and the schema of the messages contained
-  # in the "items" list. We'll see how to use these in further examples.
   @Quote.query_method(query_fields=('limit', 'order', 'pageToken'), path='quotes', http_method='GET', name='quote.list')
   def QuoteList(self, query):
     # We have no filters that we need to apply, so we just return the query
