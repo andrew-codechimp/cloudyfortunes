@@ -68,7 +68,7 @@ class CloudyFortunesApi(remote.Service):
   # As with Quote.method, overrides can be specified for both the schema of
   # the request that defines the query and the schema of the messages contained
   # in the "items" list. We'll see how to use these in further examples.
-  @Quote.query_method(path='quotes', http_method='GET', name='quote.list')
+  @Quote.query_method(query_fields=('limit', 'order', 'pageToken'), path='quotes', http_method='GET', name='quote.list')
   def QuoteList(self, query):
     # We have no filters that we need to apply, so we just return the query
     # object as is. As we'll see in further examples, we can augment the query
