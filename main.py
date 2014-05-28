@@ -5,6 +5,8 @@ from google.appengine.ext import ndb
 from protorpc import remote
 from endpoints_proto_datastore.ndb import EndpointsModel
 
+ADMIN_USER_EMAIL = 'cubsta@gmail.com'
+
 class Quote(EndpointsModel):  
   _message_fields_schema = ('id', 'content', 'created')
   content = ndb.StringProperty(indexed=False)  
@@ -12,8 +14,6 @@ class Quote(EndpointsModel):
 
 @endpoints.api(name='cloudyfortunes', version='v1', description='Cloudy Fortunes')
 class CloudyFortunesApi(remote.Service):
-
-  ADMIN_USER_EMAIL = 'cubsta@gmail.com'
 
   @Quote.method(user_required=True, path='quotes', http_method='POST', name='quote.insert')
   def QuoteInsert(self, my_quote):
