@@ -18,21 +18,19 @@ class CloudyFortunesApi(remote.Service):
     # Though we don't actively change the model passed in, two things happen:
     # - The entity gets an ID and is persisted
     # - Since created is auto_now_add, the entity gets a new value for created
-    if endpoints.get_current_user().email() == 'cubsta@gmail.com':
-      my_quote.put()
-    else:
-      raise endpoints.UnauthorizedException('Invalid user id.')
+    if not endpoints.get_current_user().email() == 'cubsta@gmail.com':
+      raise endpoints.UnauthorizedException('Invalid user id.')      
+    my_quote.put()
     return my_quote
 
 
   @Quote.method(user_required=True, request_fields=('id',), path='quotes/{id}', http_method='DELETE', name='quote.delete')
   def QuoteDelete(self, my_quote):
-    if endpoints.get_current_user().email() == 'cubsta@gmail.com':    
-      if not my_quote.from_datastore:
-        raise endpoints.NotFoundException('Quote not found.')
-      my_quote._key.delete()
-    else:
-      raise endpoints.UnauthorizedException('Invalid user id.')
+    if not endpoints.get_current_user().email() == 'cubsta@gmail.com':    
+      raise endpoints.UnauthorizedException('Invalid user id.')      
+    if not my_quote.from_datastore:
+      raise endpoints.NotFoundException('Quote not found.')
+    my_quote._key.delete()
     return my_quote    
     
   @Quote.method(request_fields=('id',),
