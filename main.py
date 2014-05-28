@@ -13,26 +13,28 @@ class Quote(EndpointsModel):
 @endpoints.api(name='cloudyfortunes', version='v1', description='Cloudy Fortunes')
 class CloudyFortunesApi(remote.Service):
 
+  ADMIN_USER_EMAIL = 'cubsta@gmail.com'
+
   @Quote.method(user_required=True, path='quotes', http_method='POST', name='quote.insert')
   def QuoteInsert(self, my_quote):
     # Though we don't actively change the model passed in, two things happen:
     # - The entity gets an ID and is persisted
     # - Since created is auto_now_add, the entity gets a new value for created
-    if not endpoints.get_current_user().email() == 'cubsta@gmail.com':
+    if not endpoints.get_current_user().email() == ADMIN_USER_EMAIL:
       raise endpoints.UnauthorizedException('Invalid user id.')      
     my_quote.put()
     return my_quote
 
   @Quote.method(user_required=True, path='quotes/{id}', http_method='PUT', name='quote.update')
   def QuoteUpdate(self, my_quote):
-    if not endpoints.get_current_user().email() == 'cubsta@gmail.com':
+    if not endpoints.get_current_user().email() == ADMIN_USER_EMAIL:
       raise endpoints.UnauthorizedException('Invalid user id.')      
     my_quote.put()
     return my_quote
 
   @Quote.method(user_required=True, request_fields=('id',), path='quotes/{id}', http_method='DELETE', name='quote.delete')
   def QuoteDelete(self, my_quote):
-    if not endpoints.get_current_user().email() == 'cubsta@gmail.com':    
+    if not endpoints.get_current_user().email() == ADMIN_USER_EMAIL:    
       raise endpoints.UnauthorizedException('Invalid user id.')      
     if not my_quote.from_datastore:
       raise endpoints.NotFoundException('Quote not found.')
