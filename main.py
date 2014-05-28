@@ -40,7 +40,7 @@ class CloudyFortunesApi(remote.Service):
       raise endpoints.NotFoundException('Quote not found.')
     my_quote._key.delete()
     return my_quote    
-    
+
   @Quote.method(request_fields=('id',),
                   path='quotes/{id}', http_method='GET', name='quote.get')
   def QuoteGet(self, my_quote):
