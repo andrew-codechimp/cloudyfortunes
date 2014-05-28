@@ -23,6 +23,12 @@ class CloudyFortunesApi(remote.Service):
     my_quote.put()
     return my_quote
 
+  @Quote.method(user_required=True, path='quotes/{id}', http_method='PUT', name='quote.update')
+  def QuoteUpdate(self, my_quote):
+    if not endpoints.get_current_user().email() == 'cubsta@gmail.com':
+      raise endpoints.UnauthorizedException('Invalid user id.')      
+    my_quote.put()
+    return my_quote
 
   @Quote.method(user_required=True, request_fields=('id',), path='quotes/{id}', http_method='DELETE', name='quote.delete')
   def QuoteDelete(self, my_quote):
