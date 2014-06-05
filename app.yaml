@@ -9,8 +9,11 @@ handlers:
 - url: /_ah/spi/.*
   script: main.api
 
-- url: /*
+- url: /.*
   script: main.app
+
+- url: /bootstrap
+  static_dir: bootstrap
 
 libraries:
 # Needed for endpoints/users_id_token.py.
