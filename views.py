@@ -1,15 +1,24 @@
-from apis import CloudyFortunesApi
+import random
 import webapp2
 import jinja2
 
+from google.appengine.ext import ndb
+from apis import CloudyFortunesApi
+from models import Quote
+
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        
-        quote = CloudyFortunesApi.QuoteRandom()
-        
+            
+        keys = Quote.query().fetch(keys_only=True)
+    	key = random.sample(keys, 1)[0]
+    	
         template_values = {
-            'quote_content': quote.Content,
+            'quote_content': key.get().Content,
         }
 
         template = JINJA_ENVIRONMENT.get_template('static/index.html')
