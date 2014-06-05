@@ -18,7 +18,7 @@ class MainPage(webapp2.RequestHandler):
     	key = random.sample(keys, 1)[0]
     	
         template_values = {
-            'quote_content': key.get().Content,
+            'quote': key.get(),
         }
 
         template = JINJA_ENVIRONMENT.get_template('static/index.html')
