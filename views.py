@@ -22,5 +22,5 @@ class MainPage(webapp2.RequestHandler):
             'quote':  key.get(),
         }
 
-        template = JINJA_ENVIRONMENT.get_template('static/index.html')
+        template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(template_values))
