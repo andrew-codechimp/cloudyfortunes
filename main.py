@@ -1,6 +1,5 @@
 import webapp2
-
-from google.appengine.ext import endpoints
+import endpoints
 from apis import CloudyFortunesApi
 from views import MainPage
 
