@@ -16,16 +16,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class MainPage(webapp2.RequestHandler):
     def get(self):
             
-        # keys = Quote.query().fetch(keys_only=True)
-        # key = random.sample(keys, 1)[0]
+        keys = Quote.query().fetch(keys_only=True)
+        key = random.sample(keys, 1)[0]
     	
-        # template_values = {
-        #     'quote':  key.get(),
-        # }
-
-        template_values = {        
-            'quote':  CloudyFortunesApi().QuoteRandom(Quote()),
+        template_values = {
+            'quote':  key.get(),
         }
+
+        # template_values = {        
+        #     'quote':  CloudyFortunesApi().QuoteRandom(Quote()),
+        # }
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(template_values))
