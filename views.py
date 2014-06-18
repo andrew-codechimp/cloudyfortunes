@@ -15,11 +15,15 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class MainPage(webapp2.RequestHandler):
     def get(self):
             
-        keys = Quote.query().fetch(keys_only=True)
-        key = random.sample(keys, 1)[0]
+        # keys = Quote.query().fetch(keys_only=True)
+        # key = random.sample(keys, 1)[0]
     	
+        # template_values = {
+        #     'quote':  key.get(),
+        # }
+    
         template_values = {
-            'quote':  key.get(),
+            'quote':  QuoteRandom(self, None),
         }
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
