@@ -24,7 +24,7 @@ class MainPage(webapp2.RequestHandler):
         # }
 
         template_values = {        
-            'quote':  CloudyFortunesApi().QuoteRandom(""),
+            'quote':  CloudyFortunesApi().QuoteRandom(Quote()),
         }
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
