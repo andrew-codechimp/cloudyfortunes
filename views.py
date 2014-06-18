@@ -22,8 +22,8 @@ class MainPage(webapp2.RequestHandler):
         #     'quote':  key.get(),
         # }
 
-        cf CloudyFortunesApi
-        
+        cf CloudyFortunesApi()
+
         template_values = {
             'quote':  cf.QuoteRandom(self, None),
         }
