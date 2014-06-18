@@ -23,10 +23,8 @@ class MainPage(webapp2.RequestHandler):
         #     'quote':  key.get(),
         # }
 
-        cf = CloudyFortunesApi()
-
-        template_values = {    
-            'quote':  cf.QuoteRandom(Quote.query()),
+        template_values = {        
+            'quote':  CloudyFortunesApi().QuoteRandom(""),
         }
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
