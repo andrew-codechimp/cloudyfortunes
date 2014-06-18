@@ -2,6 +2,7 @@ import os
 import random
 import webapp2
 import jinja2
+import endpoints
 
 from google.appengine.ext import ndb
 from apis import CloudyFortunesApi
@@ -25,7 +26,7 @@ class MainPage(webapp2.RequestHandler):
         cf = CloudyFortunesApi()
 
         template_values = {
-            'quote':  cf.QuoteRandom(),
+            'quote':  cf.QuoteRandom(query()),
         }
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
